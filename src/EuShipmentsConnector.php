@@ -2,9 +2,9 @@
 
 namespace SmartDato\EuShipments;
 
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;
-use Saloon\Http\Auth\TokenAuthenticator;
 
 class EuShipmentsConnector extends Connector
 {
@@ -13,8 +13,7 @@ class EuShipmentsConnector extends Connector
     public function __construct(
         protected readonly ?string $url = null,
         protected readonly ?string $token = null,
-    ) {
-    }
+    ) {}
 
     /**
      * The Base URL of the API

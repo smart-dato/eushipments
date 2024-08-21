@@ -2,7 +2,4 @@
 
 namespace SmartDato\EuShipments\Data;
 
-interface Data
-{
-
-}
+interface Data {}

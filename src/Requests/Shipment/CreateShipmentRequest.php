@@ -16,9 +16,7 @@ class CreateShipmentRequest extends Request implements HasBody
      */
     protected Method $method = Method::POST;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * The endpoint for the request
@@ -27,6 +25,7 @@ class CreateShipmentRequest extends Request implements HasBody
     {
         return '/createAWB';
     }
+
     protected function defaultBody(): array
     {
         return [
