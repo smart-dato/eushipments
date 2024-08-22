@@ -6,7 +6,6 @@ use SmartDato\EuShipments\Contracts\Data;
 
 class AddressData extends Data
 {
-
     public function __construct(
         protected string $name,
         protected string $countryIsoCode,
@@ -22,8 +21,7 @@ class AddressData extends Data
         protected ?string $region = null,
         protected ?string $contactPerson = null,
         protected ?string $email = null,
-    ) {
-    }
+    ) {}
 
     public function build(): array
     {
@@ -40,6 +38,6 @@ class AddressData extends Data
             'contactPerson' => $this->contactPerson,
             'phoneNumber' => $this->phoneNumber,
             'email' => $this->email,
-        ], fn($value) => !is_null($value));
+        ], fn ($value) => ! is_null($value));
     }
 }

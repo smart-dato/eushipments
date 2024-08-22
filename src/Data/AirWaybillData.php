@@ -8,7 +8,6 @@ use SmartDato\EuShipments\Enums\ShipmentType;
 
 class AirWaybillData extends Data
 {
-
     public function __construct(
 
         protected int $parcels,
@@ -53,6 +52,6 @@ class AirWaybillData extends Data
             'fragile' => $this->fragile,
             'productsInfo' => $this->productsInfo,
             'piecesInPack' => $this->piecesInPack,
-        ], fn($value) => !is_null($value));
+        ], fn ($value) => ! is_null($value));
     }
 }

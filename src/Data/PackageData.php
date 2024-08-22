@@ -11,8 +11,7 @@ class PackageData extends Data
         protected ?float $height = null,
         protected ?float $length = null,
         protected ?float $weight = null,
-    ) {
-    }
+    ) {}
 
     public function build(): array
     {

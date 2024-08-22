@@ -19,8 +19,7 @@ class ShipmentHistoryRequest extends Request implements HasBody
     public function __construct(
         protected string $airWaybillNumber,
         protected bool $testMode = true,
-    ) {
-    }
+    ) {}
 
     /**
      * The endpoint for the request
@@ -37,7 +36,7 @@ class ShipmentHistoryRequest extends Request implements HasBody
             'awbs' => [
                 [
                     'awb' => $this->airWaybillNumber,
-                ]
+                ],
             ],
         ];
     }

@@ -8,7 +8,6 @@ use SmartDato\EuShipments\Enums\Service;
 
 class ShipmentData extends Data
 {
-
     public function __construct(
         protected int $senderId,
         protected int $courierId,
@@ -23,8 +22,7 @@ class ShipmentData extends Data
         protected ?CourierRequestData $courierRequest = null,
         protected ?ReturnLabelData $returnLabel = null,
         protected bool $testMode = true,
-    ) {
-    }
+    ) {}
 
     public function build(): array
     {

@@ -19,8 +19,7 @@ class CreateShipmentRequest extends Request implements HasBody
 
     public function __construct(
         protected ShipmentData $data
-    ) {
-    }
+    ) {}
 
     /**
      * The endpoint for the request

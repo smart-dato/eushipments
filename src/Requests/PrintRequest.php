@@ -8,7 +8,6 @@ use SmartDato\EuShipments\Enums\PrintFileType;
 
 class PrintRequest extends Request
 {
-
     /**
      * The HTTP method of the request
      */
@@ -18,8 +17,7 @@ class PrintRequest extends Request
         protected string $airWaybillNumber,
         protected PrintFileType $printFileType = PrintFileType::label,
         protected bool $testMode = true,
-    ) {
-    }
+    ) {}
 
     /**
      * The endpoint for the request
