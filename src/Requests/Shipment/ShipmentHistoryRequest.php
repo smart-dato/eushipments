@@ -6,9 +6,8 @@ use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
-use SmartDato\EuShipments\Data\ShipmentData;
 
-class CreateShipmentRequest extends Request implements HasBody
+class ShipmentHistoryRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
@@ -18,7 +17,8 @@ class CreateShipmentRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        protected ShipmentData $data
+        protected string $airWaybillNumber,
+        protected bool $testMode = true,
     ) {
     }
 
@@ -27,11 +27,18 @@ class CreateShipmentRequest extends Request implements HasBody
      */
     public function resolveEndpoint(): string
     {
-        return '/createAWB';
+        return '/fulfilment/waybills-history';
     }
 
     protected function defaultBody(): array
     {
-        return $this->data->build();
+        return [
+            'testMode' => $this->testMode,
+            'awbs' => [
+                [
+                    'awb' => $this->airWaybillNumber,
+                ]
+            ],
+        ];
     }
 }

@@ -1,0 +1,11 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 22 Aug 2024 09:53:27 GMT",
+        "Server": "Apache\/2.4.7 (Ubuntu)",
+        "Vary": "Authorization",
+        "Content-Length": "116",
+        "Content-Type": "application\/json"
+    },
+    "data": "{\"awb\":\"520000014358140060945092\",\"barcode\":\"520000014358140060945092\",\"returnLabelNumber\":\"\",\"packagesBarcodes\":[]}"
+}

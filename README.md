@@ -31,8 +31,50 @@ return [
 ## Usage
 
 ```php
-$euShipments = new SmartDato\EuShipments();
-echo $euShipments->echoPhrase('Hello, SmartDato!');
+$connector = new SmartDato\EuShipments\EuShipmentsConnector();
+
+$connector->withMockClient(new \Saloon\Http\Faking\MockClient([
+    \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.create.success'),
+]));
+
+
+$response = $connector->send(
+    new \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest(
+        new \SmartDato\EuShipments\Data\ShipmentData(
+            senderId: 1234,
+            courierId: 999,
+            waybillAvailableDate: now(),
+            serviceName: \SmartDato\EuShipments\Enums\Service::crossborder,
+            recipient: new \SmartDato\EuShipments\Data\AddressData(
+                name: "Nikol Kubas",
+                countryIsoCode: "PL",
+                streetName: "Tomkowa 35A",
+                buildingNumber: "35A",
+                addressText: "Tomkowa 35A",
+                phoneNumber: "664351156",
+                cityName: "Tomkowa",
+                zipCode: "58-140",
+                contactPerson: "Nikol Kubas",
+                email: "nikol.anna.kubas@onet.pl"
+            ), awb: new \SmartDato\EuShipments\Data\AirWaybillData(
+            parcels: 1,
+            envelopes: 0,
+            totalWeight: 0.7,
+            openPackage: false,
+            saturdayDelivery: false,
+            referenceNumber: 'ex-123456789',
+            products: "Clothes",
+            bankRepayment: 0,
+            shipmentPayer: \SmartDato\EuShipments\Enums\Payer::sender,
+            declaredValue: 0,
+            otherRepayment: null,
+            observations: null,
+            fragile: true,
+            productsInfo: "Clothes",
+            piecesInPack: 1
+        )
+    ))
+);
 ```
 
 ## Testing

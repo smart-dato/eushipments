@@ -1,0 +1,11 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 22 Aug 2024 12:02:14 GMT",
+        "Server": "Apache\/2.4.7 (Ubuntu)",
+        "Vary": "Authorization",
+        "Content-Length": "246",
+        "Content-Type": "application\/json"
+    },
+    "data": "[{\"refNum\":\"0822d27a-8c6a-3dd7-8960-ea77ecf88dae\",\"awb\":\"520000014358140060945092\",\"error\":null,\"errorCode\":null,\"statusesHistory\":[{\"ID\":46263068,\"STATUS\":\"New\",\"DATE\":\"2024-08-22 12:53:32\",\"DATE_CREATED\":\"2024-08-22 12:53:32\",\"COMMENT\":null}]}]"
+}
