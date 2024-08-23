@@ -16,13 +16,15 @@ class ShipmentData extends Data
         protected AddressData $recipient,
         protected AirWaybillData $awb,
 
+        protected ?SenderData $sender = null,
         protected ?DocumentData $document = null,
         protected ?array $packages = null,
         protected ?CustomsData $customsData = null,
         protected ?CourierRequestData $courierRequest = null,
         protected ?ReturnLabelData $returnLabel = null,
         protected bool $testMode = true,
-    ) {}
+    ) {
+    }
 
     public function build(): array
     {
@@ -32,15 +34,17 @@ class ShipmentData extends Data
             'courierId' => $this->courierId,
             'waybillAvailableDate' => $this->waybillAvailableDate->format('Y-m-d'),
             'serviceName' => $this->serviceName->name,
+
             'recipient' => $this->recipient->build(),
             'awb' => $this->awb->build(),
+            'sender' => $this->sender?->build(),
 
             'document' => $this->document?->build(),
             'packages' => $this->packages
-                ? array_map(fn ($package) => $package->build(), $this->packages) : null,
+                ? array_map(fn($package) => $package->build(), $this->packages) : null,
             'customsData' => $this->customsData?->build(),
             'courierRequest' => $this->courierRequest?->build(),
             'returnLabel' => $this->returnLabel?->build(),
-        ], fn ($value) => ! is_null($value));
+        ], fn($value) => !is_null($value));
     }
 }
