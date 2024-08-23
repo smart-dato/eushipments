@@ -23,8 +23,7 @@ class ShipmentData extends Data
         protected ?CourierRequestData $courierRequest = null,
         protected ?ReturnLabelData $returnLabel = null,
         protected bool $testMode = true,
-    ) {
-    }
+    ) {}
 
     public function build(): array
     {
@@ -41,10 +40,10 @@ class ShipmentData extends Data
 
             'document' => $this->document?->build(),
             'packages' => $this->packages
-                ? array_map(fn($package) => $package->build(), $this->packages) : null,
+                ? array_map(fn ($package) => $package->build(), $this->packages) : null,
             'customsData' => $this->customsData?->build(),
             'courierRequest' => $this->courierRequest?->build(),
             'returnLabel' => $this->returnLabel?->build(),
-        ], fn($value) => !is_null($value));
+        ], fn ($value) => ! is_null($value));
     }
 }
