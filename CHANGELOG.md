@@ -2,6 +2,15 @@
 
 All notable changes to `eushipments` will be documented in this file.
 
+## 0.0.3 - 2025-11-05
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/smart-dato/eushipments/pull/3
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/smart-dato/eushipments/pull/5
+
+**Full Changelog**: https://github.com/smart-dato/eushipments/compare/0.0.2...0.0.3
+
 ## 0.0.2 - 2025-03-14
 
 ### What's Changed
