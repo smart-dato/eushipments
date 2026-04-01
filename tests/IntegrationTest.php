@@ -1,34 +1,47 @@
 <?php
 
-it('can get countries form api', function () {
-    $connector = new SmartDato\EuShipments\EuShipmentsConnector;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use SmartDato\EuShipments\Data\AddressData;
+use SmartDato\EuShipments\Data\AirWaybillData;
+use SmartDato\EuShipments\Data\ShipmentData;
+use SmartDato\EuShipments\Enums\Payer;
+use SmartDato\EuShipments\Enums\Service;
+use SmartDato\EuShipments\EuShipmentsConnector;
+use SmartDato\EuShipments\Requests\CountriesRequest;
+use SmartDato\EuShipments\Requests\PrintRequest;
+use SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest;
+use SmartDato\EuShipments\Requests\Shipment\ShipmentHistoryRequest;
 
-    $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\CountriesRequest::class => \Saloon\Http\Faking\MockResponse::fixture('countries'),
+it('can get countries form api', function () {
+    $connector = new EuShipmentsConnector;
+
+    $connector->withMockClient(new MockClient([
+        CountriesRequest::class => MockResponse::fixture('countries'),
     ]));
 
     $response = $connector->send(
-        new \SmartDato\EuShipments\Requests\CountriesRequest
+        new CountriesRequest
     );
 
     expect($response->status())->toBe(200);
 });
 
 it('can create shipment', function () {
-    $connector = new SmartDato\EuShipments\EuShipmentsConnector;
+    $connector = new EuShipmentsConnector;
 
-    $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.create.success'),
+    $connector->withMockClient(new MockClient([
+        CreateShipmentRequest::class => MockResponse::fixture('shipment/create_success'),
     ]));
 
     $response = $connector->send(
-        new \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest(
-            new \SmartDato\EuShipments\Data\ShipmentData(
+        new CreateShipmentRequest(
+            new ShipmentData(
                 senderId: 1111,
                 courierId: 999,
                 waybillAvailableDate: now(),
-                serviceName: \SmartDato\EuShipments\Enums\Service::crossborder,
-                recipient: new \SmartDato\EuShipments\Data\AddressData(
+                serviceName: Service::crossborder,
+                recipient: new AddressData(
                     name: 'Nikol Kubas',
                     countryIsoCode: 'PL',
                     streetName: 'Tomkowa 35A',
@@ -39,7 +52,7 @@ it('can create shipment', function () {
                     zipCode: '58-140',
                     contactPerson: 'Nikol Kubas',
                     email: 'nikol.anna.kubas@onet.pl'
-                ), awb: new \SmartDato\EuShipments\Data\AirWaybillData(
+                ), awb: new AirWaybillData(
                     parcels: fake()->randomDigit() + 1,
                     envelopes: 0,
                     totalWeight: fake()->randomFloat(1),
@@ -48,7 +61,7 @@ it('can create shipment', function () {
                     referenceNumber: fake()->uuid(),
                     products: 'Clothes',
                     bankRepayment: 0,
-                    shipmentPayer: \SmartDato\EuShipments\Enums\Payer::sender,
+                    shipmentPayer: Payer::sender,
                     declaredValue: 0,
                     otherRepayment: null,
                     observations: null,
@@ -70,14 +83,14 @@ it('can create shipment', function () {
 });
 
 it('can get label', function () {
-    $connector = new SmartDato\EuShipments\EuShipmentsConnector;
+    $connector = new EuShipmentsConnector;
 
-    $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\PrintRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.print.success'),
+    $connector->withMockClient(new MockClient([
+        PrintRequest::class => MockResponse::fixture('shipment/print_success'),
     ]));
 
     $response = $connector->send(
-        new \SmartDato\EuShipments\Requests\PrintRequest(
+        new PrintRequest(
             '520000014358140060945092',
             testMode: false,
         )
@@ -90,14 +103,14 @@ it('can get label', function () {
 });
 
 it('can get shipment history', function () {
-    $connector = new SmartDato\EuShipments\EuShipmentsConnector;
+    $connector = new EuShipmentsConnector;
 
-    $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\Shipment\ShipmentHistoryRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.tracking.success'),
+    $connector->withMockClient(new MockClient([
+        ShipmentHistoryRequest::class => MockResponse::fixture('shipment/tracking_success'),
     ]));
 
     $response = $connector->send(
-        new \SmartDato\EuShipments\Requests\Shipment\ShipmentHistoryRequest(
+        new ShipmentHistoryRequest(
             '520000014358140060945092',
             testMode: false,
         )
