@@ -18,7 +18,7 @@ it('can create shipment', function () {
     $connector = new SmartDato\EuShipments\EuShipmentsConnector;
 
     $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.create.success'),
+        \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment/create_success'),
     ]));
 
     $response = $connector->send(
@@ -73,7 +73,7 @@ it('can get label', function () {
     $connector = new SmartDato\EuShipments\EuShipmentsConnector;
 
     $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\PrintRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.print.success'),
+        \SmartDato\EuShipments\Requests\PrintRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment/print_success'),
     ]));
 
     $response = $connector->send(
@@ -93,7 +93,7 @@ it('can get shipment history', function () {
     $connector = new SmartDato\EuShipments\EuShipmentsConnector;
 
     $connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-        \SmartDato\EuShipments\Requests\Shipment\ShipmentHistoryRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.tracking.success'),
+        \SmartDato\EuShipments\Requests\Shipment\ShipmentHistoryRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment/tracking_success'),
     ]));
 
     $response = $connector->send(
