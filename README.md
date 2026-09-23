@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/smart-dato/eushipments.svg?style=flat-square)](https://packagist.org/packages/smart-dato/eushipments)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/smart-dato/eushipments/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/smart-dato/eushipments/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/smart-dato/eushipments/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/smart-dato/eushipments/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/smart-dato/eushipments/code-style.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/smart-dato/eushipments/actions?query=workflow%3A%22Code+style%22+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/smart-dato/eushipments.svg?style=flat-square)](https://packagist.org/packages/smart-dato/eushipments)
 
 This is our EuShipments Laravel SDK. API documentation can be found [here](https://documenter.getpostman.com/view/26992907/2s93Y2S2Q8) 
@@ -21,61 +21,64 @@ You can publish the config file with:
 php artisan vendor:publish --tag="eushipments-config"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
+```dotenv
+EUSHIPMENTS_BASE_URL=https://test-api.inout.bg/api/v1/
+EUSHIPMENTS_TOKEN=your-api-token
 ```
+
+The test environment is `https://test-api.inout.bg/api/v1/`; production is `https://api1.inout.bg/api/v1/`.
 
 ## Usage
 
 ```php
-$connector = new SmartDato\EuShipments\EuShipmentsConnector();
+use SmartDato\EuShipments\Data\AddressData;
+use SmartDato\EuShipments\Data\AirWaybillData;
+use SmartDato\EuShipments\Data\ShipmentData;
+use SmartDato\EuShipments\Enums\Payer;
+use SmartDato\EuShipments\Enums\Service;
+use SmartDato\EuShipments\EuShipmentsConnector;
+use SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest;
 
-$connector->withMockClient(new \Saloon\Http\Faking\MockClient([
-    \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest::class => \Saloon\Http\Faking\MockResponse::fixture('shipment.create.success'),
-]));
+$connector = new EuShipmentsConnector();
 
-
-$response = $connector->send(
-    new \SmartDato\EuShipments\Requests\Shipment\CreateShipmentRequest(
-        new \SmartDato\EuShipments\Data\ShipmentData(
-            senderId: 1234,
-            courierId: 999,
-            waybillAvailableDate: now(),
-            serviceName: \SmartDato\EuShipments\Enums\Service::crossborder,
-            recipient: new \SmartDato\EuShipments\Data\AddressData(
-                name: "Nikol Kubas",
-                countryIsoCode: "PL",
-                streetName: "Tomkowa 35A",
-                buildingNumber: "35A",
-                addressText: "Tomkowa 35A",
-                phoneNumber: "664351156",
-                cityName: "Tomkowa",
-                zipCode: "58-140",
-                contactPerson: "Nikol Kubas",
-                email: "nikol.anna.kubas@onet.pl"
-            ), awb: new \SmartDato\EuShipments\Data\AirWaybillData(
-            parcels: 1,
-            envelopes: 0,
-            totalWeight: 0.7,
-            openPackage: false,
-            saturdayDelivery: false,
-            referenceNumber: 'ex-123456789',
-            products: "Clothes",
-            bankRepayment: 0,
-            shipmentPayer: \SmartDato\EuShipments\Enums\Payer::sender,
-            declaredValue: 0,
-            otherRepayment: null,
-            observations: null,
-            fragile: true,
-            productsInfo: "Clothes",
-            piecesInPack: 1
-        )
-    ))
-);
+$response = $connector->send(new CreateShipmentRequest(new ShipmentData(
+    senderId: 1234,
+    courierId: 999,
+    waybillAvailableDate: now(),
+    serviceName: Service::crossborder,
+    recipient: new AddressData(
+        name: 'Jane Doe',
+        countryIsoCode: 'PL',
+        streetName: 'ul. Przykladowa 1',
+        buildingNumber: '1',
+        addressText: 'ul. Przykladowa 1',
+        phoneNumber: '000000000',
+        cityName: 'Warszawa',
+        zipCode: '00-001',
+        contactPerson: 'Jane Doe',
+        email: 'jane@example.com',
+    ),
+    awb: new AirWaybillData(
+        parcels: 1,
+        envelopes: 0,
+        totalWeight: 0.7,
+        openPackage: false,
+        saturdayDelivery: false,
+        referenceNumber: 'order-1001',
+        products: 'Clothes',
+        bankRepayment: 0,
+        shipmentPayer: Payer::sender,
+        declaredValue: 0,
+        otherRepayment: null,
+        observations: null,
+        fragile: true,
+        productsInfo: 'Clothes',
+        piecesInPack: 1,
+    ),
+)));
 ```
+
+`senderId` and `courierId` are the IDs from your EuShipments account.
 
 ## Testing
 
@@ -86,10 +89,6 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
