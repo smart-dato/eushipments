@@ -42,16 +42,16 @@ it('can create shipment', function () {
                 waybillAvailableDate: now(),
                 serviceName: Service::crossborder,
                 recipient: new AddressData(
-                    name: 'Nikol Kubas',
+                    name: 'Jane Doe',
                     countryIsoCode: 'PL',
-                    streetName: 'Tomkowa 35A',
+                    streetName: 'ul. Przykladowa 1',
                     buildingNumber: '35A',
-                    addressText: 'Tomkowa 35A',
-                    phoneNumber: '664351156',
-                    cityName: 'Tomkowa',
-                    zipCode: '58-140',
-                    contactPerson: 'Nikol Kubas',
-                    email: 'nikol.anna.kubas@onet.pl'
+                    addressText: 'ul. Przykladowa 1',
+                    phoneNumber: '000000000',
+                    cityName: 'Warszawa',
+                    zipCode: '00-001',
+                    contactPerson: 'Jane Doe',
+                    email: 'jane@example.com'
                 ), awb: new AirWaybillData(
                     parcels: fake()->randomDigit() + 1,
                     envelopes: 0,
